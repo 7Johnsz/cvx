@@ -188,7 +188,7 @@ export default function Home() {
 
       <section className="py-24 bg-background">
         <div className="container max-w-3xl mx-auto px-6">
-          <h1 className="text-2xl mb-5 text-center text-gray-500">Tirando suas dúvidas.</h1>
+          <h1 className="text-[19px] mb-5 text-center text-gray-500">Tirando suas dúvidas.</h1>
           <h1 className="text-4xl md:text-6xl mb-16 text-center font-[900] leading-tight tracking-tighter">
             Dúvidas frequentes
           </h1>
