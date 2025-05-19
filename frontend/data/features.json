@@ -1,0 +1,32 @@
+[
+  {
+    "icon": "Navigation",
+    "title": "Passe pelos filtros do ATS",
+    "description": "Crie currículos que superam os sistemas automatizados e chegam até os olhos humanos.",
+    "colSpan": "xl:col-span-3"
+  },
+  {
+    "icon": "Timer",
+    "title": "Economize tempo e energia",
+    "description": "Esqueça edições infinitas no Word. O CVx faz isso por você, com clareza e objetividade.",
+    "colSpan": "xl:col-span-3"
+  },
+  {
+    "icon": "Brain",
+    "title": "Receba análises inteligentes",
+    "description": "Veja sua aderência à vaga, pontos de melhoria e sugestões práticas — tudo com base em dados.",
+    "colSpan": "xl:col-span-2"
+  },
+  {
+    "icon": "FileUser",
+    "title": "Crie currículos personalizados",
+    "description": "Cada vaga é única. O CVx adapta seu currículo para se destacar em cada oportunidade.",
+    "colSpan": "xl:col-span-2"
+  },
+  {
+    "icon": "Mic",
+    "title": "Comunique melhor seu valor",
+    "description": "Evite jargões vazios. Use linguagem clara e convincente para impressionar recrutadores.",
+    "colSpan": "xl:col-span-2"
+  }
+]
