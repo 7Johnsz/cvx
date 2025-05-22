@@ -63,7 +63,7 @@ export default function Home() {
             </h1>
 
             <Button asChild className="mt-6 w-full md:w-[250px] py-6 text-lg">
-              <Link href="/docs" className="text-accent font-bold">
+              <Link href="/login" className="text-accent font-bold">
                 <Sparkles size={20} className="inline mr-2" />
                 Criar meu currículo
               </Link>
