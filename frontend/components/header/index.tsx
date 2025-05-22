@@ -10,7 +10,6 @@ export default function Header() {
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Fecha o menu ao redimensionar para desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -30,7 +29,6 @@ export default function Header() {
             <span className="font-bold text-lg">CVx</span>
           </div>
 
-          {/* Desktop menu */}
           <nav className="hidden md:flex gap-6 text-sm ml-6">
             <Link href="/" className="hover:text-gray-600 dark:hover:text-gray-300">Início</Link>
             <Link href="/" className="hover:text-gray-600 dark:hover:text-gray-300">Em breve</Link>
@@ -38,7 +36,6 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Mobile menu toggle */}
           <button
             className="md:hidden p-2 rounded hover:bg-accent/50"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -46,7 +43,6 @@ export default function Header() {
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
 
-          {/* GitHub link */}
           <Link
             href="https://github.com/7johnsz"
             className="hidden md:inline-flex p-2 rounded hover:bg-accent/50"
@@ -56,7 +52,6 @@ export default function Header() {
             <Github className="h-5 w-5" />
           </Link>
 
-          {/* Theme toggle */}
           <Button
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             variant="outline"
@@ -68,7 +63,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile menu content */}
       {isMenuOpen && (
         <nav className="md:hidden bg-white dark:bg-background border-t px-6 py-4 space-y-4">
           <Link href="/" className="block hover:text-gray-600 dark:hover:text-gray-300">Início</Link>

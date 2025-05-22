@@ -40,35 +40,46 @@ export default function Home() {
     <main className="tracking-tight">
       <Header />
 
-      <section className="min-h-[80vh] flex items-center justify-center py-16">
-        <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-12 gap-12">
-          <div className="w-full md:w-1/2 text-center md:text-left">
+      <section className="relative min-h-[80vh] flex items-center justify-center py-16 overflow-hidden">
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+          src="https://videos.openai.com/vg-assets/assets%2Ftask_01jvm650qqex8900haep5apv8q%2Ftask_01jvm650qqex8900haep5apv8q_genid_2d133770-d0ac-41c9-b579-dfd72e1a1db2_25_05_19_11_53_486989%2Fvideos%2F00000_692601408%2Fsource.mp4?st=2025-05-19T19%3A36%3A21Z&se=2025-05-25T20%3A36%3A21Z&sks=b&skt=2025-05-19T19%3A36%3A21Z&ske=2025-05-25T20%3A36%3A21Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=3d249c53-07fa-4ba4-9b65-0bf8eb4ea46a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=6w4un3Ke2sJL3gILUIj0aZOpD5waH04ttI%2BXTN7tuUM%3D&az=oaivgprodscus"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+
+        <div className="absolute inset-0 bg-black/95 z-0" />
+
+        <div className="relative z-10 container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-12 gap-12">
+          <div className="w-full md:w-1/2 text-center md:text-left text-white">
             <h1 className="text-4xl md:text-6xl font-[900] leading-tight tracking-tighter">
               Ajudando{" "}
-              <FileUser size={40} className="inline align-middle text-blue-400" />
+              <FileUser size={40} className="inline align-middle text-blue-300" />
               {" "}currículos a{" "}
-              <DoorOpen size={40} className="inline align-middle text-red-400" />
+              <DoorOpen size={40} className="inline align-middle text-red-300" />
               {" "}saírem do modo fantasma.
             </h1>
 
             <Button asChild className="mt-6 w-full md:w-[250px] py-6 text-lg">
-              <Link href="/docs" className="text-accent font-bold">
+              <Link href="/login" className="text-accent font-bold">
                 <Sparkles size={20} className="inline mr-2" />
                 Criar meu currículo
               </Link>
             </Button>
 
-            <p className="text-base md:text-lg text-gray-500 mt-6">
+            <p className="text-base md:text-lg text-gray-200 mt-6">
               Ajudando você a encontrar o {" "}
               <span className="underline font-semibold">seu próximo emprego.</span>
             </p>
           </div>
 
-          <div className="w-full md:w-1/2 flex justify-center">
+          <div className="w-full md:w-1/2 flex justify-center hover:scale-105 transition-transform duration-500">
             <img
               src="/jornals.webp"
               alt="Ilustração de currículo"
-              className="w-full  h-auto rounded-lg shadow-lg"
+              className="w-full h-auto rounded-lg shadow-lg"
             />
           </div>
         </div>
@@ -104,11 +115,13 @@ export default function Home() {
               className="flex mt-8 font-semibold text-sm md:text-base hover:text-white/80 transition"
             >
               <SquareArrowOutUpRight className="mr-2 h-5 w-5" />
-              Totalmente Open-Source
+                Open-Source
             </Link>
           </div>
         </div>
       </section>
+
+      <hr />
 
       <section className="py-24 bg-background">
         <div className="container mx-auto px-6">
@@ -140,7 +153,7 @@ export default function Home() {
 
       <section className="py-24 bg-background">
         <div className="container max-w-3xl mx-auto px-6">
-          <h1 className="text-2xl mb-5 text-center text-gray-500">Tirando suas dúvidas.</h1>
+          <h1 className="text-[19px] mb-5 text-center text-gray-500">Tirando suas dúvidas.</h1>
           <h1 className="text-4xl md:text-6xl mb-16 text-center font-[900] leading-tight tracking-tighter">
             Dúvidas frequentes
           </h1>
