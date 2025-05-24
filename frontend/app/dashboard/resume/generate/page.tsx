@@ -186,7 +186,7 @@ export default function GenerateResumePage() {
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <Button variant="ghost" size="sm" asChild className="mb-2">
-                  <Link href="/resume" className="flex items-center gap-1">
+                  <Link href="/dashboard/resume" className="flex items-center gap-1">
                     <ArrowLeft className="h-4 w-4" />
                     <span>Voltar</span>
                   </Link>
