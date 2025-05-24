@@ -1,11 +1,8 @@
 from fastapi import Request, HTTPException, status
-from dotenv import load_dotenv
 from datetime import datetime
 from functools import wraps
 
 import os
-
-load_dotenv(override=True)
 
 AUTH_TOKEN = os.getenv('AUTHORIZATION_KEY')
 BEARER_PREFIX = "Bearer " 
@@ -36,6 +33,8 @@ def AuthService(func):
         auth_header = request.headers.get('Authorization', '')
                 
         try:
+            print(auth_header)
+            print(AUTH_TOKEN)
             if not auth_header:
                 unauthorized_response["timestamp"] = datetime.now().isoformat()
                 raise HTTPException(

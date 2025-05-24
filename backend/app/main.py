@@ -7,6 +7,7 @@ from app.config.handlers.config import configure_events
 
 # Router
 from app.api.v1.controllers.routers.main import index, memory, health, docs
+from app.api.v1.controllers.routers.user import signup, login
 
 class BaseConfig:
     def __init__(self):
@@ -24,6 +25,7 @@ class BaseConfig:
         # Register routers
         self.app.include_router(health.router, tags=["Health Check"])
         self.app.include_router(memory.router, tags=["Memory Usage"])
+        self.app.include_router(signup.router, tags=["User Signup"])
         self.app.include_router(index.router, tags=["Index"])
         self.app.include_router(docs.router, tags=["Docs"])
                 
