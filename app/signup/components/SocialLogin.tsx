@@ -10,7 +10,7 @@ export function SocialLogin() {
       onClick={() => signIn("github")}
     >
       <Github className="w-4 h-4 mr-2" />
-      Entrar com GitHub
+      {context === "signup" ? "Cadastrar com GitHub" : "Entrar com GitHub"}
     </Button>
   );
 }
