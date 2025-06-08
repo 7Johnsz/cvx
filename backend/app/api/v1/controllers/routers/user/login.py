@@ -1,8 +1,5 @@
 from fastapi import Depends, Request
 
-# Services
-from ....service.auth.decorator import AuthService
-
 # Config
 from ......config.middleware.config import limiter
 from ...config.database.models.schema import Users
