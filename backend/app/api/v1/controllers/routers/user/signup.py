@@ -19,7 +19,7 @@ from sqlmodel import select, Session
 from typing import Union
 import datetime
 
-@router.post("/signup", dependencies=[Depends(AuthService)])
+@router.post("/signup")
 @limiter.limit("30/minute")
 async def signup(
     request: Request,

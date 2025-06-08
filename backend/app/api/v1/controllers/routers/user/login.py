@@ -18,26 +18,29 @@ from ....models.Login import LoginModel
 from sqlmodel import select, Session
 from typing import Union
 
-@router.post("/login", dependencies=[Depends(AuthService)])
+@router.post("/login")
 @limiter.limit("30/minute")
-async def signup(
+async def login(
     request: Request,
     login_data: LoginModel,
     session: Session = Depends(get_session)
 ) -> Union[dict, str]:
-    
-    if login_data.password and login_data.email:
-        existing_user = session.exec(
-            select(Users).where(
-                Users.email == login_data.email
-            )
-        ).first()
+    try:
+        if login_data.password and login_data.email:
+            existing_user = session.exec(
+                select(Users).where(
+                    Users.email == login_data.email
+                )
+            ).first()
+            
+            if existing_user and password_manager.verify_password(login_data.password, existing_user.password):
+                return {
+                    "message": "Login successful",
+                }
+            
+            return {"error": "Invalid email or password"}
         
-        if existing_user and password_manager.verify_password(login_data.password, existing_user.password):
-            return {
-                "message": "Login successful",
-            }
-        
-        return {"error": "Invalid email or password"}
-    
-    return {"error": "Invalid user data"}
+        return {"error": "Invalid user data"}
+    except Exception as e:
+        print(f"Error during login: {e}")
+        return {"error": "An error occurred during login"}
