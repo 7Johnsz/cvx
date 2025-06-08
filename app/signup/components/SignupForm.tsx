@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/config";
 
 export function SignupForm() {
   const [user, setUser] = useState("");
@@ -15,7 +16,7 @@ export function SignupForm() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:3008/signup", {
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user, email, password }),
