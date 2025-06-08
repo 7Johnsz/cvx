@@ -67,7 +67,7 @@ export default function SignupPage() {
             onClick={() => signIn("github")}
           >
             <Github className="w-4 h-4 mr-2" />
-            Cadastrar com GitHub
+            Entrar com GitHub
           </Button>
 
           <p className="text-xs text-muted-foreground text-center">
