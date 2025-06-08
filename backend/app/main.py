@@ -7,6 +7,7 @@ from app.config.handlers.config import configure_events
 
 # Router
 from app.api.v1.controllers.routers.main import index, memory, health, docs
+from app.api.v1.controllers.routers.security import refresh_token
 from app.api.v1.controllers.routers.user import login, signup
 
 class BaseConfig:
@@ -31,6 +32,9 @@ class BaseConfig:
         # User routers
         self.app.include_router(login.router, tags=["User Login"])
         self.app.include_router(signup.router, tags=["User Signup"])
+        
+        # Security routers
+        self.app.include_router(refresh_token.router, tags=["Refresh Token"])
                 
         return self.app
 
