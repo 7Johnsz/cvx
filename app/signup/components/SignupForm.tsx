@@ -15,7 +15,7 @@ export function SignupForm() {
     setError("");
 
     try {
-      const res = await fetch("http://127.0.0.1:3008/signup", {
+      const res = await fetch("http://localhost:3008/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user, email, password }),
