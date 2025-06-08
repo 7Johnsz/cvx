@@ -46,4 +46,4 @@ async def signup(
     session.add(new_user)
     session.commit()
     session.refresh(new_user)
-    return {"message": "User created successfully", "user": new_user}
+    return {"message": "User created successfully"}
