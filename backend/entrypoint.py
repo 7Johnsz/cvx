@@ -38,7 +38,7 @@ if __name__ == '__main__':
             "-m",
             "gunicorn",
             "app.main:app",
-            "--bind", f"0.0.0.0:{os.getenv('PORT_NUMBER')}",
+            "--bind", f"localhost:{os.getenv('PORT_NUMBER')}",
             "--reload",
             "--workers", f"{str(max(1, workers))}",
             "--worker-class", "uvicorn.workers.UvicornWorker",

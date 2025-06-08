@@ -10,30 +10,42 @@ from slowapi.util import get_remote_address
 from slowapi import Limiter
 
 # Services
-from ...api.v1.service.webhook.config import webhook
+from ...api.v1.service.webhook.notifier import notifier
 
 # Utils
 import redis.asyncio as redis
 import os
 
-redis_host = os.getenv("REDIS_HOST")
-redis_port = os.getenv("REDIS_PORT")
+# Ensure redis_host and redis_port are not None and port is int
+redis_host = os.getenv("REDIS_HOST") or "localhost"
+redis_port = int(os.getenv("REDIS_PORT") or 6379)
 redis_password = os.getenv("REDIS_PASSWORD")
 
 limiter = Limiter(
     key_func=get_remote_address,
-    storage_uri=f"redis://default:{redis_password}@{redis_host}:{redis_port}/1", 
+    storage_uri=f"redis://default:{redis_password}@{redis_host}:{redis_port}/0", 
     key_prefix="rate_limit:"
 )
 
-redis_pool = redis.ConnectionPool(
+ratelimit_pool = redis.ConnectionPool(
+    host=redis_host, 
+    password=redis_password,
+    port=redis_port,
+    db=0,
+    decode_responses=True
+)
+
+redis_rate = redis.Redis(connection_pool=ratelimit_pool)
+
+tokens_pool = redis.ConnectionPool(
     host=redis_host, 
     password=redis_password,
     port=redis_port,
     db=1,
     decode_responses=True
 )
-redis_client = redis.Redis(connection_pool=redis_pool)
+
+redis_tokens = redis.Redis(connection_pool=tokens_pool)
 
 async def notify_rate_limit(request: Request, ip: str, limit_detail: str):
     """
@@ -49,11 +61,12 @@ async def notify_rate_limit(request: Request, ip: str, limit_detail: str):
         ip (str): The IP address of the client that exceeded the rate limit.
         limit_detail (str): Details about the rate limit that was exceeded.
     """
-    await webhook.warning_message(
+
+    await notifier.warn(
         path=str(request.url.path),
         method=str(request.method),
-        ip_adress=str(ip), 
-        user_agent=request.headers.get("User-Agent"),
+        ip=str(ip), 
+        ua=request.headers.get("User-Agent"),
         description=(
             "⚠️ API Rate limit exceeded!\n"
             "A user has reached the request limit."
@@ -79,11 +92,11 @@ async def rate_limit_exception_handler(request: Request, exc: RateLimitExceeded)
     
     notification_key = f"notified:{client_ip}"
     
-    was_set = await redis_client.setnx(notification_key, "1")
+    was_set = await redis_rate.setnx(notification_key, "1")
     
     if was_set:
         ttl = 60
-        await redis_client.expire(notification_key, ttl)
+        await redis_rate.expire(notification_key, ttl)
         
         background_tasks = BackgroundTasks()
         background_tasks.add_task(notify_rate_limit, request, client_ip, limit_detail)
@@ -112,7 +125,7 @@ def configure_middleware(app):
     app.add_middleware(GZipMiddleware, minimum_size=1000)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["localhost", "127.0.0.1"], 
+        allow_origins=["localhost", "127.0.0.1", "http://localhost:3000"], 
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"]

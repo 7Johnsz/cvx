@@ -1,6 +1,12 @@
 from typing import List, Optional
 
-from sqlalchemy import DateTime, Double, ForeignKeyConstraint, Index, Integer, PrimaryKeyConstraint, String, UniqueConstraint
+from sqlalchemy import (
+    DateTime, Double, 
+    ForeignKeyConstraint, Index, 
+    Integer, PrimaryKeyConstraint, 
+    String, UniqueConstraint, ForeignKey
+)
+
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 import datetime
 
@@ -39,3 +45,19 @@ class Users(Base):
     plan_id: Mapped[Optional[int]] = mapped_column(Integer)
 
     plan: Mapped[Optional['Plans']] = relationship('Plans', back_populates='users')
+    
+# class Tokens(Base):
+#     __tablename__ = 'tokens'
+#     __table_args__ = (
+#         ForeignKeyConstraint(['user_id'], ['users.id'], name='tokens_user_id_fkey'),
+#         PrimaryKeyConstraint('id', name='tokens_pkey'),
+#         UniqueConstraint('token_hash', name='tokens_token_hash_key')
+#     )
+
+#     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+#     token_hash: Mapped[str] = mapped_column(String)
+#     created_at: Mapped[datetime.datetime] = mapped_column(DateTime)
+#     expires_at: Mapped[datetime.datetime] = mapped_column(DateTime)
+#     user_id: Mapped[Optional[int]] = mapped_column(Integer)
+
+#     user: Mapped[Optional['Users']] = relationship('Users', back_populates='tokens')

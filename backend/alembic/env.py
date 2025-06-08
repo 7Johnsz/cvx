@@ -1,3 +1,5 @@
+import os
+
 from app.api.v1.controllers.config.database.config import SQLModel
 from logging.config import fileConfig
 
@@ -13,6 +15,11 @@ load_dotenv()
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+db_url = os.getenv("DB_URL")
+
+if db_url:
+    config.set_main_option("sqlalchemy.url", db_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -43,6 +50,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
+    
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
