@@ -1,4 +1,4 @@
-from fastapi import Depends, Request
+from fastapi import Depends, Request, Response
 
 # Config
 from ......config.middleware.config import redis_tokens
@@ -34,6 +34,7 @@ def create_access_token(user_id: str, secret_key: str):
 @limiter.limit("30/minute")
 async def login(
     request: Request,
+    response: Response,
     login_data: LoginModel,
     session: Session = Depends(get_session)
 ) -> Union[dict, str]:
@@ -49,23 +50,38 @@ async def login(
                 access_token = create_access_token(secret_key=str(secret_key), user_id=str(existing_user.id))
                 refresh_token = token_manager.encode(str(existing_user.id))
                 
-                teste = await redis_tokens.set(
+                await redis_tokens.set(
                     refresh_token,
                     existing_user.id, 
                     ex=60*60*24*7 # Store token for 7 days  
                 )
                 
-                print(f"Token stored in Redis: {teste}")
+                response.set_cookie(
+                    key="refresh_token",
+                    value=refresh_token,
+                    httponly=True,
+                    secure=True,        
+                    samesite="lax",    
+                    max_age=60*60*24*7  # 7 days
+                )
+                
+                response.set_cookie(
+                    key="access_token",
+                    value=access_token,
+                    httponly=True,
+                    secure=True,     
+                    samesite="lax",  
+                    max_age=60*15    # 15 minutes
+                )
                 
                 return {
                     "message": "Login successful",
-                    "refresh_token": refresh_token,
-                    "access_token": access_token,
                     "user": {
                         "id": existing_user.id,
                         "name": existing_user.name,
                     }
                 }
+
             return {"error": "Invalid email or password"}
         
         return {"error": "Invalid user data"}
