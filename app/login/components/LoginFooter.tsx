@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function LoginFooter() {
+export function SharedFooter() {
   return (
     <p className="text-xs text-muted-foreground text-center">
       Ao continuar, você concorda com nossos{" "}
