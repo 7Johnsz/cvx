@@ -10,7 +10,7 @@ from slowapi.util import get_remote_address
 from slowapi import Limiter
 
 # Services
-from ...api.v1.service.webhook.config import webhook
+from ...api.v1.service.webhook.notifier import notifier
 
 # Utils
 import redis.asyncio as redis
@@ -49,11 +49,12 @@ async def notify_rate_limit(request: Request, ip: str, limit_detail: str):
         ip (str): The IP address of the client that exceeded the rate limit.
         limit_detail (str): Details about the rate limit that was exceeded.
     """
-    await webhook.warning_message(
+
+    await notifier.warn(
         path=str(request.url.path),
         method=str(request.method),
-        ip_adress=str(ip), 
-        user_agent=request.headers.get("User-Agent"),
+        ip=str(ip), 
+        ua=request.headers.get("User-Agent"),
         description=(
             "⚠️ API Rate limit exceeded!\n"
             "A user has reached the request limit."
