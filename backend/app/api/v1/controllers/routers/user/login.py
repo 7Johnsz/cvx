@@ -60,7 +60,8 @@ async def login(
                     key="refresh_token",
                     value=refresh_token,
                     httponly=True,
-                    secure=True,        
+                    # secure=True,       
+                    # path="/", 
                     samesite="lax",    
                     max_age=60*60*24*7  # 7 days
                 )
@@ -69,8 +70,9 @@ async def login(
                     key="access_token",
                     value=access_token,
                     httponly=True,
-                    secure=True,     
-                    samesite="lax",  
+                    # path="/",
+                    # secure=True,     
+                    samesite="lax",
                     max_age=60*15    # 15 minutes
                 )
                 
