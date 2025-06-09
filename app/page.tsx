@@ -43,14 +43,14 @@ export default function Home() {
       <section className="relative min-h-[80vh] flex items-center justify-center py-16 overflow-hidden">
         <video
           className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
-          src="https://videos.openai.com/vg-assets/assets%2Ftask_01jvm650qqex8900haep5apv8q%2Ftask_01jvm650qqex8900haep5apv8q_genid_2d133770-d0ac-41c9-b579-dfd72e1a1db2_25_05_19_11_53_486989%2Fvideos%2F00000_692601408%2Fsource.mp4?st=2025-05-19T19%3A36%3A21Z&se=2025-05-25T20%3A36%3A21Z&sks=b&skt=2025-05-19T19%3A36%3A21Z&ske=2025-05-25T20%3A36%3A21Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=3d249c53-07fa-4ba4-9b65-0bf8eb4ea46a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=6w4un3Ke2sJL3gILUIj0aZOpD5waH04ttI%2BXTN7tuUM%3D&az=oaivgprodscus"
+          src="/background.mp4"
           autoPlay
           muted
           loop
           playsInline
         />
 
-        <div className="absolute inset-0 bg-black/95 z-0" />
+        <div className="absolute inset-0 bg-black/80 z-0" />
 
         <div className="relative z-10 container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-12 gap-12">
           <div className="w-full md:w-1/2 text-center md:text-left text-white">
