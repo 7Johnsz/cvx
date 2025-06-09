@@ -44,10 +44,10 @@ export default function Header() {
           </button>
 
           <Link
-            href="https://github.com/7johnsz"
             className="hidden md:inline-flex p-2 rounded hover:bg-accent/50"
-            target="_blank"
+            href="https://github.com/7Johnsz/cvx"
             rel="noopener noreferrer"
+            target="_blank"
           >
             <Github className="h-5 w-5" />
           </Link>
@@ -68,10 +68,10 @@ export default function Header() {
           <Link href="/" className="block hover:text-gray-600 dark:hover:text-gray-300">Início</Link>
           <Link href="/" className="block hover:text-gray-600 dark:hover:text-gray-300">Em breve</Link>
           <Link
-            href="https://github.com/7johnsz"
             className="block hover:text-gray-600 dark:hover:text-gray-300"
-            target="_blank"
+            href="https://github.com/7Johnsz/cvx"
             rel="noopener noreferrer"
+            target="_blank"
           >
             Github: OpenSource
           </Link>
