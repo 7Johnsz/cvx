@@ -1,22 +1,18 @@
-from fastapi import Depends, Request, Response, HTTPException
+from fastapi import Depends, Request, Response, HTTPException, Cookie
 
 # Config
 from .......config.middleware.config import limiter
 from ....config.database.models.schema import Users
 from ....config.database.config import get_session
-from ....config.api import oauth2_scheme
 from ....config.api import router
 
-# Models
-from .....models.Login import LoginModel 
+from .......config.settings import SECRET_KEY
 
 from sqlmodel import select, Session
+from loguru import logger
 from typing import Union
 
 import jwt
-import os
-
-secret_key = os.getenv("SECRET_KEY")
 
 @router.post("/me")
 @limiter.limit("30/minute")
@@ -24,10 +20,12 @@ async def me(
     request: Request,
     response: Response,
     session: Session = Depends(get_session),
-    acess_token: str = Depends(oauth2_scheme)
+    access_token: str = Cookie(None) 
 ) -> Union[dict, str]:
     try:
-        payload = jwt.decode(acess_token, secret_key, algorithms=["HS256"])
+        if not access_token:
+            raise HTTPException(status_code=401, detail="No access token cookie found")
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms=["HS256"])
         user_id = payload.get("sub")
         
         if not user_id:
@@ -49,5 +47,5 @@ async def me(
         }
         
     except Exception as e:
-        print(f"Error during login: {e}")
+        logger.error(f"Error in me endpoint: {str(e)}")
         return {"error": "An error occurred during login"}

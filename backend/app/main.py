@@ -12,6 +12,9 @@ from app.api.v1.controllers.routers.user import login, signup
 from app.api.v1.controllers.routers.user.account import me
 from app.api.v1.controllers.routers.user import logout
 
+# Utils
+from app.api.v1.utils.logging import setup_logger
+
 class BaseConfig:
     def __init__(self):
         self.app = FastAPI(
@@ -40,6 +43,15 @@ class BaseConfig:
         
         # Security routers
         self.app.include_router(refresh_token.router, tags=["Refresh Token"])
+        
+        logger = setup_logger()
+        
+        @self.app.middleware("http")
+        async def log_requests(request, call_next):
+            logger.debug(f"Request: {request.method} {request.url}")
+            response = await call_next(request)
+            logger.debug(f"Response: {response.status_code}")
+            return response
                 
         return self.app
 
