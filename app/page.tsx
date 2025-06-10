@@ -3,7 +3,7 @@ import Footer from "@/components/footer";
 import { 
   HeroSection,AboutSection,
   FeaturesSection, FAQSection 
-} from "./components";
+} from "@/app/components";
 
 export default function Home() {
   return (
