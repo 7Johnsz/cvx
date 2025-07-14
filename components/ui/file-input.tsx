@@ -20,6 +20,7 @@ export function FileInput({
   buttonSize = "lg",
   showSelectedFile = true,
   accept = ".pdf,.doc,.docx,.md,.txt",
+  disabled = false,
   ...props
 }: FileInputProps) {
   const [file, setFile] = React.useState<File | null>(null)
@@ -82,7 +83,8 @@ export function FileInput({
     handleFile(droppedFile)
   }
 
-  const clearFile = () => {
+  const clearFile = (e: React.MouseEvent) => {
+    e.stopPropagation() // Evita que o clique dispare o fileInputRef.current.click()
     setFile(null)
     setError(null)
     if (inputRef.current) inputRef.current.value = ""
@@ -106,8 +108,9 @@ export function FileInput({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
+        onClick={disabled ? undefined : triggerFileInput}
       >
-        <input type="file" ref={inputRef} className="sr-only" onChange={handleFileChange} accept={accept} {...props} />
+        <input type="file" ref={inputRef} className="sr-only" onChange={handleFileChange} accept={accept} disabled={disabled} {...props} />
 
         {(!file || showSelectedFile) && (
           <Button
@@ -129,10 +132,7 @@ export function FileInput({
                 <button
                   type="button"
                   className="absolute right-2 rounded-full p-1 hover:bg-muted/80"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    clearFile()
-                  }}
+                  onClick={clearFile}
                 >
                   <X className="h-3 w-3" />
                   <span className="sr-only">Remover arquivo</span>

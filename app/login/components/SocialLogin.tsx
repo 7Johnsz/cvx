@@ -1,3 +1,4 @@
+import { OrDivider } from "@/app/signup/components";
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import { signIn } from "next-auth/react";

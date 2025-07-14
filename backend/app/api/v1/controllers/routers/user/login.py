@@ -13,14 +13,13 @@ from ....utils.token_gen import token_manager
 # Models
 from ....models.Login import LoginModel 
 
+from app.config.settings import SECRET_KEY
+
 from sqlmodel import select, Session
 from typing import Union
 
 import datetime
 import jwt
-import os
-
-secret_key = os.getenv("SECRET_KEY")
 
 def create_access_token(user_id: str, secret_key: str):
     payload = {
@@ -47,7 +46,7 @@ async def login(
             ).first()
             
             if existing_user and token_manager.decode(login_data.password, existing_user.password):
-                access_token = create_access_token(secret_key=str(secret_key), user_id=str(existing_user.id))
+                access_token = create_access_token(secret_key=str(SECRET_KEY), user_id=str(existing_user.id))
                 refresh_token = token_manager.encode(str(existing_user.id))
                 
                 await redis_tokens.set(

@@ -1,8 +1,7 @@
-from fastapi import Depends, Request, HTTPException, status
+from fastapi import Request, HTTPException, status
 
 # Config
 from ......config.middleware.config import limiter
-from ...config.database.config import get_session
 from ...config.api import router
 from ......config.middleware.config import redis_tokens
 
